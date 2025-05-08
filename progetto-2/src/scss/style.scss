@@ -1,0 +1,36 @@
+$font-stack: Arial, sans-serif;
+$primary-color: #333;
+$highlight: #f2f2f2;
+
+body {
+    font-family: $font-stack;
+    margin: 40px;
+    background-color: #fff;
+    color: $primary-color;
+}
+
+h1, h2 {
+    color: darkblue;
+    margin-bottom: 10px;
+}
+
+ul, ol {
+    margin-left: 20px;
+    line-height: 1.6;
+}
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th, td {
+        border: 1px solid $primary-color;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: $highlight;
+    }
+}
