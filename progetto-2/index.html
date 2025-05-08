@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
-    <title>Pagina di Esempio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito Web Avanzato</title>
     <link rel="stylesheet" href="./dist/css/style.css">
 </head>
+
 <body>
 
-    <h1>Benvenuto nella Pagina di Esempio</h1>
-    <p>Questo è un paragrafo con del <b>testo in grassetto</b>, del <u>testo sottolineato</u> e del <s>testo barrato</s>.</p>
-    <p>Puoi anche usare l'elemento <strong>&lt;strong&gt;</strong> per il <strong>grassetto semantico</strong>, o <em>&lt;em&gt;</em> per <em>enfasi</em>.</p>
+    <header>
+        <nav>
+            <div class="logo">SitoAvanzato</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#servizi">Servizi</a></li>
+                <li><a href="#chi-siamo">Chi Siamo</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Esempio di Elenco Puntato</h2>
-    <ul>
-        <li>Pane</li>
-        <li>Latte</li>
-        <li>Formaggio</li>
-        <li>Cioccolato</li>
-    </ul>
+    <section id="home" class="hero">
+        <h1>Benvenuto nel nostro sito</h1>
+        <p>Soluzioni moderne per un mondo digitale</p>
+        <a href="#servizi" class="btn">Scopri di più</a>
+    </section>
 
-    <h2>Esempio di Elenco Numerato</h2>
-    <ol>
-        <li>Apri il browser</li>
-        <li>Scrivi l'URL</li>
-        <li>Premi Invio</li>
-        <li>Visualizza il contenuto</li>
-    </ol>
+    <section id="servizi" class="section servizi">
+        <h2>I nostri servizi</h2>
+        <div class="grid">
+            <div class="card">Web Development</div>
+            <div class="card">Design Grafico</div>
+            <div class="card">Consulenza IT</div>
+        </div>
+    </section>
 
-    <h2>Esempio di Tabella</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Età</th>
-                <th>Città</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Mario Rossi</td>
-                <td>30</td>
-                <td>Milano</td>
-            </tr>
-            <tr>
-                <td>Luca Bianchi</td>
-                <td>25</td>
-                <td>Roma</td>
-            </tr>
-            <tr>
-                <td>Giulia Verdi</td>
-                <td>28</td>
-                <td>Torino</td>
-            </tr>
-        </tbody>
-    </table>
+    <section id="chi-siamo" class="section">
+        <h2>Chi siamo</h2>
+        <p>Siamo un team appassionato che sviluppa soluzioni innovative su misura per i nostri clienti.</p>
+    </section>
+
+    <section id="contatti" class="section">
+        <h2>Contattaci</h2>
+        <form>
+            <input type="text" placeholder="Nome" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Messaggio" rows="5" required></textarea>
+            <button type="submit">Invia</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SitoAvanzato. Tutti i diritti riservati.</p>
+    </footer>
 
 </body>
+
 </html>
