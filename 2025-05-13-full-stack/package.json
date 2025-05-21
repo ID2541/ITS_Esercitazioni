@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "live-server frontend",
-    "sass": "sass --watch frontend/styles/main.scss frontend/dist/main.css",
+    "sass": "sass frontend/styles/main.scss frontend/dist/main.css --watch ",
     "frontend": "concurrently --name \"SASS,SERVE\" \"npm run sass \" \"npm run serve\" ",
     "backend": "nodemon backend/index.js",
     "start": "concurrently \"npm run backend\" \"npm run frontend\""
@@ -16,12 +16,17 @@
   "type": "commonjs",
   "dependencies": {
     "bootstrap": "^5.3.6",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "chokidar": "^3.6.0",
     "concurrently": "^9.1.2",
     "live-server": "^1.2.2",
     "nodemon": "^3.1.10",
     "sass": "^1.88.0"
+  },
+  "resolutions": {
+    "chokidar": "^3.5.3"
   }
 }
