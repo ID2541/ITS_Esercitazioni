@@ -1,16 +1,36 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<meta name="description" content=""/>
-		<link rel="stylesheet" type="text/css" href="./dist/main.css"/>
-	</head>
-	<body>
-		<div class="main-content">
-			<h1>sas</h1>
-            <p1>test</p1>
-		</div>
-	</body>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8" /> <!-- Imposta la codifica dei caratteri -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Impostazioni per la responsività su dispositivi mobili -->
+	<title>TODO List</title> <!-- Titolo della pagina visualizzato nella scheda del browser -->
+	<link rel="stylesheet" href="./dist/main.css" /> <!-- Collegamento al file CSS per lo stile -->
+</head>
+
+<body>
+
+	<h1>TODO List</h1> <!-- Titolo principale della pagina -->
+
+	<!-- Form per inserire una nuova nota -->
+	<form id="todo-form">
+		<!-- Campo di testo per scrivere la nota, campo obbligatorio -->
+		<input type="text" id="note-input" placeholder="Scrivi una nota..." required />
+		<!-- Bottone per inviare il form e aggiungere la nota -->
+		<button type="submit">Aggiungi</button>
+	</form>
+
+	<!-- Lista non ordinata dove verranno aggiunte dinamicamente le note -->
+	<ul id="todo-list"></ul>
+
+	<!-- Bottone per eliminare tutte le note contrassegnate come completate -->
+	<button id="delete-completed-btn">Elimina note completate</button>
+
+	<!-- Inclusione dello script JavaScript che gestisce la logica del frontend -->
+	<script src="./script/main.js"></script>
+</body>
+
 </html>
+
+
+

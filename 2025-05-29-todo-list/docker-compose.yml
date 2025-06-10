@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
 
   mysql:
@@ -15,4 +17,3 @@ services:
 
 volumes:
   mysql-data:
-  

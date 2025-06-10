@@ -1,6 +1,100 @@
-html,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  color: red;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  color: #4a90e2;
+}
+
+form#todo-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+form#todo-form input[type=text] {
+  flex-grow: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #4a90e2;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+form#todo-form input[type=text]:focus {
+  border-color: rgb(34.3857142857, 117.3857142857, 214.6142857143);
+  outline: none;
+}
+form#todo-form button {
+  padding: 0 1rem;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+form#todo-form button:hover {
+  background-color: rgb(34.3857142857, 117.3857142857, 214.6142857143);
+}
+
+ul#todo-list {
+  list-style: none;
+  width: 100%;
+  max-width: 400px;
+}
+ul#todo-list li {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+}
+ul#todo-list li input[type=checkbox] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+ul#todo-list li span {
+  flex-grow: 1;
+}
+ul#todo-list li.completed span {
+  color: #999;
+  text-decoration: line-through;
+}
+
+button#delete-completed-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #e94e77;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button#delete-completed-btn:hover {
+  background-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
 }
 
 /*# sourceMappingURL=main.css.map */
