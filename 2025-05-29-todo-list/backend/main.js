@@ -8,7 +8,7 @@ app.use(express.json());           // Abilito parsing JSON per il corpo delle ri
 
 // Configurazione e connessione al database MySQL
 const db = mysql.createConnection({
-    host: 'localhost',   // indirizzo del server DB (locale)
+    host: '127.0.0.1',   // indirizzo del server DB (locale)
     user: 'myuser',      // utente DB
     password: 'mypass',  // password DB
     database: 'mydb',    // nome del database da usare
