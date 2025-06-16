@@ -1,0 +1,284 @@
+/* ==========================================================================
+   Stili principali per la pagina PHP di esempio
+   ========================================================================== */
+
+/* Reset e base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: #202C39;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: transparent;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container principale */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #F2D492;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(32, 44, 57, 0.4);
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Titoli */
+h1 {
+    color: #202C39;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: #F29559;
+    border-radius: 2px;
+}
+
+h2 {
+    color: #202C39;
+    font-size: 1.8em;
+    margin: 30px 0 20px 0;
+    border-left: 4px solid #F29559;
+    padding-left: 15px;
+}
+
+/* Box informativi */
+.info-box {
+    background: #B8B08D;
+    border: 1px solid #F29559;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 25px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(242, 149, 89, 0.3);
+}
+
+.info-box p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #202C39;
+}
+
+.info-box strong {
+    color: #283845;
+}
+
+/* Form styling */
+.form-box {
+    background: #B8B08D;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 25px 0;
+    border: 1px solid #F29559;
+}
+
+.form-box h2 {
+    margin-top: 0;
+    color: #202C39;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: 600;
+    color: #202C39;
+    font-size: 1.1em;
+}
+
+input[type="text"] {
+    padding: 12px 15px;
+    border: 2px solid #283845;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 250px;
+    background-color: #F2D492;
+    color: #202C39;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #F29559;
+    box-shadow: 0 0 0 3px rgba(242, 149, 89, 0.25);
+}
+
+input[type="submit"] {
+    padding: 12px 25px;
+    background: #F29559;
+    color: #202C39;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="submit"]:hover {
+    background: #283845;
+    color: #F2D492;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(242, 149, 89, 0.4);
+}
+
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Messaggio di successo */
+.success {
+    color: #202C39;
+    font-weight: 600;
+    background: #F2D492;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #F29559;
+    margin-bottom: 20px;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Lista colori */
+ul {
+    background: #F29559;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #B8B08D;
+    list-style: none;
+}
+
+li {
+    padding: 10px 0;
+    font-size: 1.1em;
+    color: #202C39;
+    border-bottom: 1px solid rgba(184, 176, 141, 0.5);
+    transition: transform 0.2s ease;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li:hover {
+    transform: translateX(10px);
+    font-weight: 600;
+    color: #283845;
+}
+
+/* Sezione calcoli */
+.info-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* Messaggi orario con emoji */
+.time-message {
+    font-size: 1.3em;
+    text-align: center;
+    padding: 20px;
+    background: #B8B08D;
+    border-radius: 10px;
+    margin: 20px 0;
+    border-left: 5px solid #F29559;
+    color: #202C39;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #B8B08D;
+    text-align: center;
+    color: #F2D492;
+    font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    input[type="text"] {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    input[type="submit"] {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .info-box, .form-box {
+        padding: 20px;
+    }
+}
