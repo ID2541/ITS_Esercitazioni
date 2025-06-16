@@ -1,19 +1,19 @@
-version: "3.8"
+version: "3.8"  # Specifica la versione del formato docker-compose usato (3.8 è una versione recente)
 
-services:
+services:       # Inizio della definizione dei servizi che verranno eseguiti
 
-  mysql:
-    image: mysql:8.4
-    container_name: rubrica_db
+  mysql:        # Nome del servizio, in questo caso un container MySQL
+    image: mysql:8.4             # Immagine Docker ufficiale MySQL versione 8.4
+    container_name: rubrica_db   # Nome assegnato al container (per riconoscerlo facilmente)
     ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypass
-    volumes:
-      - mysql-data:/var/lib/mysql
+      - "3306:3306"              # Mappa la porta 3306 del container sulla porta 3306 della macchina host (PC)
+    environment:                 # Variabili d’ambiente per configurare MySQL all’avvio
+      MYSQL_ROOT_PASSWORD: rootpass  # Password dell’utente root di MySQL
+      MYSQL_DATABASE: mydb            # Nome del database da creare automaticamente all’avvio
+      MYSQL_USER: myuser              # Nome utente MySQL aggiuntivo creato
+      MYSQL_PASSWORD: mypass          # Password per l’utente mysql creato
+    volumes:                      # Volume per persistenza dati: mantiene i dati anche se il container si ferma o ricrea
+      - mysql-data:/var/lib/mysql  # Mappa il volume "mysql-data" nella cartella dati del DB nel container
 
-volumes:
-  mysql-data:
+volumes:                      # Definizione dei volumi Docker (per la persistenza dei dati)
+  mysql-data:                 # Volume chiamato "mysql-data" creato e gestito da Docker

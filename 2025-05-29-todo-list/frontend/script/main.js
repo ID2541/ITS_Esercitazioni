@@ -1,37 +1,91 @@
-const apiUrl = 'http://localhost:3000/api/notes'; // URL base per le API del backend
+const baseUrl = 'http://localhost:3000/api';
+let currentListId = null;
 
-const form = document.getElementById('todo-form'); // form per aggiungere nuove note
-const input = document.getElementById('note-input'); // campo di testo per la nuova nota
-const list = document.getElementById('todo-list');   // lista HTML dove mostrare le note
+// Elementi del DOM
+const listSelector = document.getElementById('list-selector'); // select o sidebar per le liste
+const addListForm = document.getElementById('add-list-form');
+const listNameInput = document.getElementById('list-name-input');
 
-// Funzione per caricare le note dal backend e mostrarle nella lista
-async function loadNotes() {
+const form = document.getElementById('todo-form');
+const input = document.getElementById('note-input');
+const list = document.getElementById('todo-list');
+const deleteCompletedBtn = document.getElementById('delete-completed-btn');
+
+// Carica tutte le liste
+async function loadLists() {
     try {
-        // Chiamata GET per ottenere tutte le note dal backend
-        const res = await fetch(apiUrl);
-        const notes = await res.json();
+        const res = await fetch(`${baseUrl}/lists`);
+        const lists = await res.json();
+        listSelector.innerHTML = '';
 
-        // Svuoto la lista prima di aggiungere gli elementi aggiornati
+        lists.forEach(l => {
+            const option = document.createElement('option');
+            option.value = l.id;
+            option.textContent = l.name;
+            listSelector.appendChild(option);
+        });
+
+        // Se c'è almeno una lista, seleziona la prima
+        if (lists.length > 0) {
+            currentListId = lists[0].id;
+            listSelector.value = currentListId;
+            loadNotes(currentListId);
+        }
+    } catch (err) {
+        console.error('Errore caricando liste:', err);
+    }
+}
+
+// Carica le note per una lista specifica
+async function loadNotes(listId) {
+    try {
+        const res = await fetch(`${baseUrl}/lists/${listId}/notes`);
+        const notes = await res.json();
         list.innerHTML = '';
 
-        // Ciclo sulle note ricevute e le aggiungo alla lista
         notes.forEach(note => {
-            const li = document.createElement('li'); // creo un elemento lista
-            const checkbox = document.createElement('input'); // creo la checkbox
-            checkbox.type = 'checkbox'; // tipo checkbox
-            checkbox.checked = note.completed === 1; // spunta checkbox se la nota è completata
+            const li = document.createElement('li');
 
-            // Evento per aggiornare lo stato completed al cambio della checkbox
-            checkbox.addEventListener('change', () => toggleComplete(note.id, checkbox.checked));
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = note.completed === 1;
 
-            const span = document.createElement('span'); // testo della nota
+            const span = document.createElement('span');
             span.textContent = note.text;
+            if (note.completed === 1) span.classList.add('completed');
 
-            // Aggiungo checkbox e testo dentro l'elemento lista
+            checkbox.addEventListener('change', async () => {
+                try {
+                    await fetch(`${baseUrl}/notes/${note.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ completed: checkbox.checked ? 1 : 0 }),
+                    });
+                    span.classList.toggle('completed', checkbox.checked);
+                } catch (err) {
+                    console.error('Errore aggiornando completamento:', err);
+                }
+            });
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Modifica';
+            editButton.addEventListener('click', () => editNote(note.id, span));
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Rimuovi';
+            deleteButton.addEventListener('click', async () => {
+                try {
+                    await fetch(`${baseUrl}/notes/${note.id}`, { method: 'DELETE' });
+                    li.remove();
+                } catch (err) {
+                    console.error('Errore rimuovendo nota:', err);
+                }
+            });
+
             li.appendChild(checkbox);
             li.appendChild(span);
-
-            // Aggiungo l'elemento lista alla lista principale in pagina
+            li.appendChild(editButton);
+            li.appendChild(deleteButton);
             list.appendChild(li);
         });
     } catch (err) {
@@ -39,68 +93,189 @@ async function loadNotes() {
     }
 }
 
-// Evento submit del form per aggiungere una nuova nota
+// Aggiunta nota
 form.addEventListener('submit', async e => {
-    e.preventDefault(); // prevengo il comportamento di default (ricarica pagina)
-    const text = input.value.trim(); // testo inserito, senza spazi ai lati
-    if (!text) return; // non procedo se campo vuoto
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || !currentListId) return;
 
     try {
-        // Chiamata POST per inserire la nuova nota nel DB
-        await fetch(apiUrl, {
+        await fetch(`${baseUrl}/lists/${currentListId}/notes`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text }), // invio il testo nel body in formato JSON
+            body: JSON.stringify({ text }),
         });
-        input.value = ''; // pulisco il campo di input
-        loadNotes();      // ricarico la lista per mostrare la nuova nota
+        input.value = '';
+        loadNotes(currentListId);
     } catch (err) {
         console.error('Errore aggiungendo nota:', err);
     }
 });
 
-// Funzione per aggiornare lo stato "completed" di una nota nel backend
-async function toggleComplete(id, completed) {
+// Crea nuova lista
+addListForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = listNameInput.value.trim();
+    if (!name) return;
+
     try {
-        // Chiamata PUT per aggiornare la proprietà completed della nota con id specificato
-        await fetch(`${apiUrl}/${id}`, {
-            method: 'PUT',
+        await fetch(`${baseUrl}/lists`, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ completed }), // invio lo stato aggiornato
+            body: JSON.stringify({ name }),
         });
-        loadNotes(); // ricarico la lista per aggiornare la UI
+        listNameInput.value = '';
+        loadLists();
     } catch (err) {
-        console.error('Errore aggiornando nota:', err);
-    }
-}
-
-const deleteCompletedBtn = document.getElementById('delete-completed-btn'); // bottone per eliminare note completate
-
-// Evento click sul bottone per eliminare tutte le note completate
-deleteCompletedBtn.addEventListener('click', async () => {
-    try {
-        // Chiamata DELETE per eliminare tutte le note completate dal backend
-        const res = await fetch('http://localhost:3000/api/notes/completed', {
-            method: 'DELETE',
-        });
-        const data = await res.json();
-        console.log(data.message);
-
-        // Aggiorno immediatamente il DOM rimuovendo tutte le note checkate dalla lista
-        const todoList = document.getElementById('todo-list');
-        const items = todoList.querySelectorAll('li');
-
-        items.forEach(li => {
-            const checkbox = li.querySelector('input[type="checkbox"]');
-            if (checkbox.checked) {
-                li.remove(); // rimuovo dal DOM la nota completata
-            }
-        });
-
-    } catch (error) {
-        console.error('Errore durante la cancellazione delle note completate:', error);
+        console.error('Errore aggiungendo lista:', err);
     }
 });
 
-// Carico e mostro le note appena la pagina viene caricata
-loadNotes();
+// Cambio lista
+listSelector.addEventListener('change', e => {
+    currentListId = e.target.value;
+    loadNotes(currentListId);
+});
+
+// Elimina completate nella lista corrente
+deleteCompletedBtn.addEventListener('click', async () => {
+    if (!currentListId) return;
+    try {
+        await fetch(`${baseUrl}/lists/${currentListId}/notes/completed`, {
+            method: 'DELETE'
+        });
+        loadNotes(currentListId);
+    } catch (err) {
+        console.error('Errore eliminando note completate:', err);
+    }
+});
+
+// Modifica nota
+function editNote(id, spanElement) {
+    const li = spanElement.parentElement;
+    const currentText = spanElement.textContent;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentText;
+
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Salva';
+
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Annulla';
+
+    function restore() {
+        input.replaceWith(spanElement);
+        saveButton.remove();
+        cancelButton.remove();
+    }
+
+    saveButton.addEventListener('click', async () => {
+        const newText = input.value.trim();
+        if (!newText) return;
+        try {
+            await fetch(`${baseUrl}/notes/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: newText }),
+            });
+            spanElement.textContent = newText;
+            restore();
+        } catch (err) {
+            console.error('Errore salvando modifica:', err);
+        }
+    });
+
+    cancelButton.addEventListener('click', restore);
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Escape') restore();
+        else if (e.key === 'Enter') saveButton.click();
+    });
+
+    spanElement.replaceWith(input);
+    li.appendChild(saveButton);
+    li.appendChild(cancelButton);
+    input.focus();
+}
+
+// Rimozione di una lista
+
+const deleteBtn = document.getElementById('delete-list-btn');
+const modal = document.getElementById('delete-modal');
+const modalSelector = document.getElementById('modal-list-selector');
+const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+
+deleteBtn.addEventListener('click', () => {
+    // Popola il select del modale escludendo la lista "Default"
+    modalSelector.innerHTML = '';
+
+    Array.from(listSelector.options).forEach(opt => {
+        if (opt.textContent !== 'Default') {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.textContent;
+            modalSelector.appendChild(option);
+        }
+    });
+
+    confirmDeleteBtn.disabled = modalSelector.options.length === 0;
+
+    modal.classList.remove('hidden');
+});
+
+cancelDeleteBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+});
+
+modalSelector.addEventListener('change', () => {
+    confirmDeleteBtn.disabled = !modalSelector.value;
+});
+
+confirmDeleteBtn.addEventListener('click', async () => {
+    const listToDeleteId = modalSelector.value;
+    const listToDeleteName = modalSelector.options[modalSelector.selectedIndex].textContent;
+
+    if (!listToDeleteId) return;
+
+    if (confirm(`Sei sicuro di voler eliminare la lista "${listToDeleteName}"?`)) {
+        try {
+            const res = await fetch(`${baseUrl}/lists/${listToDeleteId}`, {
+                method: 'DELETE',
+            });
+            if (!res.ok) throw new Error('Errore eliminando lista');
+
+            alert(`Lista "${listToDeleteName}" eliminata.`);
+
+            // Rimuovi la lista dalla select principale
+            const optionToRemove = listSelector.querySelector(`option[value="${listToDeleteId}"]`);
+            if (optionToRemove) optionToRemove.remove();
+
+            // Rimuovi dal modale
+            modalSelector.querySelector(`option[value="${listToDeleteId}"]`)?.remove();
+
+            confirmDeleteBtn.disabled = modalSelector.options.length === 0;
+
+            // Se la lista cancellata era la corrente, aggiorna currentListId e carica un’altra lista o niente
+            if (currentListId === listToDeleteId) {
+                if (listSelector.options.length > 0) {
+                    currentListId = listSelector.options[0].value;
+                    listSelector.value = currentListId;
+                    loadNotes(currentListId);
+                } else {
+                    currentListId = null;
+                    list.innerHTML = '';
+                }
+            }
+
+            modal.classList.add('hidden');
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+});
+
+
+// Avvia tutto al caricamento
+loadLists();

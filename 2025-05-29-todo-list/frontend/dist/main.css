@@ -56,7 +56,7 @@ form#todo-form button:hover {
 ul#todo-list {
   list-style: none;
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
 }
 ul#todo-list li {
   background-color: white;
@@ -73,13 +73,65 @@ ul#todo-list li input[type=checkbox] {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  flex-shrink: 0;
 }
-ul#todo-list li span {
+ul#todo-list li span,
+ul#todo-list li input[type=text] {
   flex-grow: 1;
+  min-width: 0;
 }
 ul#todo-list li.completed span {
   color: #999;
   text-decoration: line-through;
+}
+ul#todo-list li button {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+  min-width: 60px;
+}
+ul#todo-list li button:nth-of-type(1) {
+  background-color: #4a90e2;
+  color: white;
+}
+ul#todo-list li button:nth-of-type(1):hover {
+  background-color: rgb(34.3857142857, 117.3857142857, 214.6142857143);
+}
+ul#todo-list li button:nth-of-type(2) {
+  background-color: #e94e77;
+  color: white;
+}
+ul#todo-list li button:nth-of-type(2):hover {
+  background-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
+}
+ul#todo-list li button.save-btn {
+  background-color: rgb(52.0214285714, 130.5214285714, 222.4785714286);
+  color: white;
+}
+ul#todo-list li button.save-btn:hover {
+  background-color: rgb(30.8642857143, 105.3642857143, 192.6357142857);
+}
+ul#todo-list li button.cancel-btn {
+  background-color: rgb(241.4572864322, 146.0427135678, 171.2814070352);
+  color: rgb(140.5326633166, 17.4673366834, 50.0201005025);
+  border: 1px solid rgb(185.8944723618, 23.1055276382, 66.1658291457);
+}
+ul#todo-list li button.cancel-btn:hover {
+  background-color: rgb(235.8190954774, 100.6809045226, 136.4271356784);
+  color: rgb(95.1708542714, 11.8291457286, 33.8743718593);
+}
+ul#todo-list li input[type=text] {
+  font-size: 1.1rem;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #4a90e2;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  outline: none;
 }
 
 button#delete-completed-btn {
@@ -95,6 +147,160 @@ button#delete-completed-btn {
 }
 button#delete-completed-btn:hover {
   background-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
+}
+
+h2 {
+  color: #27ae60;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+select#list-selector {
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #27ae60;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+form#add-list-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+form#add-list-form input[type=text] {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #27ae60;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+form#add-list-form input[type=text]:focus {
+  border-color: rgb(29.661971831, 132.338028169, 73.014084507);
+  outline: none;
+}
+form#add-list-form button {
+  padding: 0 1rem;
+  background-color: #27ae60;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+form#add-list-form button:hover {
+  background-color: rgb(29.661971831, 132.338028169, 73.014084507);
+}
+
+.modal, #delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden, .hidden#delete-modal {
+  display: none;
+}
+
+.modal-content, #delete-modal .modal-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button#delete-list-btn {
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem 1.5rem;
+  background-color: #e94e77;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button#delete-list-btn:hover {
+  background-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
+}
+
+#delete-modal .modal-content h2#modal-title {
+  color: #e94e77;
+  margin-bottom: 1rem;
+}
+#delete-modal .modal-content select#modal-list-selector {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #e94e77;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+#delete-modal .modal-content select#modal-list-selector:focus {
+  border-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
+  outline: none;
+}
+#delete-modal .modal-content .modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+#delete-modal .modal-content .modal-actions button#confirm-delete-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #e94e77;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#delete-modal .modal-content .modal-actions button#confirm-delete-btn:hover:enabled {
+  background-color: rgb(227.3618090452, 32.6381909548, 84.1457286432);
+}
+#delete-modal .modal-content .modal-actions button#confirm-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#delete-modal .modal-content .modal-actions button#cancel-delete-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: rgb(252.7336683417, 236.7663316583, 240.9899497487);
+  border: 1px solid rgb(185.8944723618, 23.1055276382, 66.1658291457);
+  border-radius: 4px;
+  color: rgb(140.5326633166, 17.4673366834, 50.0201005025);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#delete-modal .modal-content .modal-actions button#cancel-delete-btn:hover {
+  background-color: rgb(247.0954773869, 191.4045226131, 206.135678392);
+  color: rgb(95.1708542714, 11.8291457286, 33.8743718593);
 }
 
 /*# sourceMappingURL=main.css.map */
