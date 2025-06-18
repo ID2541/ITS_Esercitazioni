@@ -65,7 +65,7 @@ $categories = [
                             <li><?= htmlspecialchars($error); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="index.html" class="btn btn-secondary">Torna al modulo</a>
+                    <a href="http://localhost:8080/index.html" class="btn btn-secondary">Torna al modulo</a>
                 </div>
             <?php endif; ?>
         </main>
