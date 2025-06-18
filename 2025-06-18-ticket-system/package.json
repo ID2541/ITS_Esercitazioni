@@ -1,0 +1,33 @@
+{
+  "name": "ticket-system",
+  "version": "1.0.0",
+  "description": "Sistema base di invio ticket con PHP e Docker",
+  "main": "index.js",
+  "scripts": {
+  "start": "npm run build && npm run dev",
+  "build": "npm run sass:build && npm run docker:up",
+  "stop": "docker-compose down && echo '⏹️  Sistema fermato'",
+  "dev": "concurrently -k -n SASS,SERVER -c green,magenta \"npm run sass\" \"npm run live\"",
+  "sass": "sass src/scss/main.scss public/css/main.css --watch",
+  "sass:build": "sass src/scss/main.scss public/css/main.css --style=compressed",
+  "docker:up": "docker-compose up -d",
+  "docker:down": "docker-compose down",
+  "docker:logs": "docker-compose logs -f",
+  "docker:restart": "docker-compose down && docker-compose up -d",
+  "live": "live-server public --port=8080 --host=localhost"
+}
+,
+  "keywords": [
+    "php",
+    "ticket-system",
+    "docker",
+    "sass"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "live-server": "^1.2.2",
+    "sass": "^1.69.5"
+  }
+}
