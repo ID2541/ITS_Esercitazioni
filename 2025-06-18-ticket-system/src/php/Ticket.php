@@ -34,7 +34,7 @@ $categories = [
 <head>
     <meta charset="UTF-8">
     <title>Risultato Invio Ticket</title>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="http://localhost:8080/css/main.css">
 </head>
 <body>
     <div class="container">
@@ -52,8 +52,10 @@ $categories = [
                         <div class="detail-row"><strong>Categoria:</strong> <span><?= htmlspecialchars($categories[$ticket->getCategory()] ?? $ticket->getCategory()); ?></span></div>
                         <div class="detail-row"><strong>Descrizione:</strong> <span><?= nl2br(htmlspecialchars($ticket->getDescription())); ?></span></div>
                         <div class="detail-row"><strong>Data creazione:</strong> <span><?= $ticket->getCreatedAt()->format('d/m/Y H:i:s'); ?></span></div>
-                    </div>
-                    <a href="index.html" class="btn btn-primary">Invia nuovo ticket</a>
+                    </div><br>
+                    <p>Grazie per aver inviato il tuo ticket. Il nostro team lo esaminerà al più presto.</p>
+                    <p>Per ulteriori richieste, puoi inviare un nuovo ticket.</p><br>
+                    <a href="http://localhost:8080/index.html" class="btn btn-primary">Invia nuovo ticket</a>
                 </div>
             <?php else: ?>
                 <div class="error-message">
