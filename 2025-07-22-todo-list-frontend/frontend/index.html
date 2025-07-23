@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>TODO List</title>
+	<link rel="stylesheet" href="./dist/main.css" />
+</head>
+
+<body>
+
+	<h1>TODO List</h1>
+
+	<!-- Selettore per scegliere una lista esistente -->
+	<h2 for="list-selector">Lista:</h2><br>
+	<select id="list-selector">
+		<!-- Opzioni generate dinamicamente via JavaScript -->
+	</select>
+	<!-- Bottone per aprire il popup -->
+	<button id="delete-list-btn">Elimina lista</button><br>
+
+	<!-- Modale nascosto di default -->
+	<div id="delete-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+		<div class="modal-content">
+			<h2 id="modal-title">Seleziona la lista da eliminare</h2>
+			<select id="modal-list-selector">
+				<!-- Opzioni inserite dinamicamente -->
+			</select>
+			<div class="modal-actions">
+				<button id="confirm-delete-btn" disabled>Elimina</button>
+				<button id="cancel-delete-btn">Annulla</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Form per creare una nuova lista -->
+	<form id="add-list-form">
+		<input type="text" id="list-name-input" placeholder="Nome nuova lista..." required />
+		<button type="submit">Crea lista</button>
+	</form>
+
+	<!-- Form per inserire una nuova nota -->
+	<form id="todo-form">
+		<input type="text" id="note-input" placeholder="Scrivi una nota..." required />
+		<button type="submit">Aggiungi</button>
+	</form>
+
+	<!-- Lista delle note -->
+	<ul id="todo-list"></ul>
+
+	<!-- Bottone per eliminare le note completate -->
+	<button id="delete-completed-btn">Elimina note completate</button>
+
+	<!-- Script principale -->
+	<script src="./script/main.js"></script>
+</body>
+
+</html>
