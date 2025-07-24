@@ -18,3 +18,4 @@ class Note extends Model
         return $this->belongsTo(Task::class);
     }
 }
+// This model represents a Note in the application, which is associated with a Task.
