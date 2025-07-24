@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost/api';
+const baseUrl = 'http://127.0.0.1:8000/api';
 let currentListId = null;
 
 // Elementi del DOM
@@ -14,33 +14,38 @@ const deleteCompletedBtn = document.getElementById('delete-completed-btn');
 // Carica tutte le liste
 async function loadtasks() {
     try {
-        const res = await fetch(`${baseUrl}/tasks`);
-        const tasks = await res.json();
-        taskselector.innerHTML = '';
+        const response = await fetch(`${baseUrl}/tasks`);
+        const result = await response.json();         // <- corregge la struttura
+        const tasks = result.data;                     // <- prende solo l'array
 
-        tasks.forEach(l => {
+        const listSelector = document.getElementById('list-selector');
+        listSelector.innerHTML = ''; // Pulisce la lista attuale
+
+        tasks.forEach(task => {
             const option = document.createElement('option');
-            option.value = l.id;
-            option.textContent = l.name;
-            taskselector.appendChild(option);
+            option.value = task.id;
+            option.textContent = task.name; // Usa il campo corretto in base al tuo model
+            listSelector.appendChild(option);
         });
 
-        // Se c'è almeno una lista, seleziona la prima
         if (tasks.length > 0) {
             currentListId = tasks[0].id;
-            taskselector.value = currentListId;
-            loadNotes(currentListId);
+            loadNotes(currentListId); // Carica le note della prima lista
+        } else {
+            currentListId = null;
         }
-    } catch (err) {
-        console.error('Errore caricando liste:', err);
+    } catch (error) {
+        console.error('Errore caricando liste:', error);
     }
 }
+
 
 // Carica le note per una lista specifica
 async function loadNotes(listId) {
     try {
         const res = await fetch(`${baseUrl}/tasks/${listId}/notes`);
-        const notes = await res.json();
+        const json = await res.json();
+        const notes = Array.isArray(json) ? json : json.data; // supporta entrambi i formati
         list.innerHTML = '';
 
         notes.forEach(note => {
@@ -92,6 +97,7 @@ async function loadNotes(listId) {
         console.error('Errore caricando note:', err);
     }
 }
+
 
 // Aggiunta nota
 form.addEventListener('submit', async e => {
